@@ -6,10 +6,11 @@
 trigger:
 - master
 
-pool: DemoAg
+pool:
+  vmImage: 'ubuntu-latest'
 
 variables:
-  imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
+  imageName: 'ramakrishnambdocker/DocnetCoreWebappDockerCICD:$(build.buildNumber)'
 
 steps:
 
@@ -18,17 +19,17 @@ steps:
   inputs:
     command: Build an image
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: dockerHub
+    dockerRegistryEndpoint: DockerRegistryRK
     dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
-    
+
 - task: Docker@1
   displayName: 'Push an image'
   inputs:
     command: Push an image
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: dockerHub
+    dockerRegistryEndpoint: DockerRegistryRK
     dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
