@@ -14,22 +14,14 @@ variables:
 
 steps:
 
-- task: Docker@1
-  displayName: 'Build an image'
+- task: Docker@2
   inputs:
-    command: Build an image
-    containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: DockerRegistryRK
-    dockerFile: Dockerfile
+    containerRegistry: 'dockerHub'
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
     imageName: $(imageName)
     restartPolicy: always
-
-- task: Docker@1
-  displayName: 'Push an image'
+- task: Docker@2
   inputs:
-    command: Push an image
-    containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: DockerRegistryRK
-    dockerFile: Dockerfile
-    imageName: $(imageName)
-    restartPolicy: always
+    containerRegistry: 'dockerHub'
+    command: 'push'
