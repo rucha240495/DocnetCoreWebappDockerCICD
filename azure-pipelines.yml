@@ -18,17 +18,17 @@ steps:
   inputs:
     command: Build an image
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: DockerRegistryRK
+    dockerRegistryEndpoint: dockerhub
     dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
-
+    
 - task: Docker@1
   displayName: 'Push an image'
   inputs:
     command: Push an image
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: DockerRegistryRK
+    dockerRegistryEndpoint: dockerHub
     dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
