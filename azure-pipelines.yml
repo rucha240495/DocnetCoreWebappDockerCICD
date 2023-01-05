@@ -6,26 +6,29 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
-  
+pool: DemoAg
 
 variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
 
 steps:
-- task: Docker@2
+
+- task: Docker@1
+  displayName: 'Build an image'
   inputs:
-    containerRegistry: 'dockerHub'
-    command: 'login'
-- task: Docker@2
-  inputs:
-    containerRegistry: 'dockerHub'
-    command: 'build'
-    Dockerfile: '**/Dockerfile'
+    command: Build an image
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: DockerRegistryRK
+    dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
-- task: Docker@2
+
+- task: Docker@1
+  displayName: 'Push an image'
   inputs:
-    containerRegistry: 'dockerHub'
-    command: 'push'
+    command: Push an image
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: DockerRegistryRK
+    dockerFile: Dockerfile
+    imageName: $(imageName)
+    restartPolicy: always
