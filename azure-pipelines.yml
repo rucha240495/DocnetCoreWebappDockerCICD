@@ -11,7 +11,7 @@ pool:
   
 
 variables:
-  imageName: 'lalitkr2506/azureimage:$(build.buildNumber)'
+  imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
 
 steps:
 - task: Docker@2
