@@ -18,7 +18,7 @@ steps:
   inputs:
     command: Build an image
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: dockerhub
+    dockerRegistryEndpoint: dockerHub
     dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
