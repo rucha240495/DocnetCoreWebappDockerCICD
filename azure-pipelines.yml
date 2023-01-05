@@ -10,7 +10,7 @@ pool: DemoAg
   
 
 variables:
-  imageName: 'ramakrishnambdocker/DocnetCoreWebappDockerCICD:$(build.buildNumber)'
+  imageName: 'lalitkr2506/azureimage:$(build.buildNumber)'
 
 steps:
 
