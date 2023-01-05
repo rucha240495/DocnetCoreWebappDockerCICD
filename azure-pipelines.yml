@@ -6,8 +6,7 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+pool: DemoAg
 
 variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
