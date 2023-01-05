@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  imageName: 'ramakrishnambdocker/DocnetCoreWebappDockerCICD:$(build.buildNumber)'
+  imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
 
 steps:
 
