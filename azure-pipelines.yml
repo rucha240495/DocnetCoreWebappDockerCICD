@@ -19,7 +19,7 @@ steps:
   inputs:
     command: Build an image
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: DockerRegistryRK
+    dockerRegistryEndpoint: dockerHub
     dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
@@ -29,7 +29,7 @@ steps:
   inputs:
     command: Push an image
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: DockerRegistryRK
+    dockerRegistryEndpoint: dockerHub
     dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
