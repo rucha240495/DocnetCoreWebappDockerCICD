@@ -12,6 +12,9 @@ variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
 
 steps:
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
 - task: SonarQubePrepare@5
   inputs:
     SonarQube: 'azSonar'
