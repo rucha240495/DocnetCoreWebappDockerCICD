@@ -12,35 +12,27 @@ variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
 
 steps:
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: restore
+    projects: '$(Parameters.RestoreBuildProjects)'
 
-- task: SonarQubePrepare@5
+- task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B77A063157.SonarQubePrepare@5
+  displayName: 'Prepare analysis on SonarQube'
   inputs:
-    SonarQube: 'azSonar'
-    scannerMode: 'MSBuild'
+    SonarQube: azSonar
     projectKey: 'mytestproject_dotnet-job'
-    projectName: 'DemoProject'
-- task: MSBuild@1
+    projectName: DemoProject
+- task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
-    solution: '**/*.sln'
-- task: SonarQubeAnalyze@5
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
-      $base64 = [System.Convert]::ToBase64String($token)
-       
-      $basicAuth = [string]::Format("Basic {0}", $base64)
-      $headers = @{ Authorization = $basicAuth }
-       
-      $result = Invoke-RestMethod -Method Get -Uri http://alegrisource.westeurope.cloudapp.azure.com/api/qualitygates/project_status?projectKey=alegri-cockpit20 -Headers $headers
-      $result | ConvertTo-Json | Write-Host
-       
-      if ($result.projectStatus.status -eq "OK") {
-      Write-Host "Quality Gate Succeeded"
-      }else{
-      throw "Quality gate failed"
-      }
+    projects: '$(Parameters.RestoreBuildProjects)'
+    arguments: '--configuration $(BuildConfiguration)'
+- task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@5
+  displayName: 'Run Code Analysis'
+- task: SonarSource.sonarqube.291ed61f-1ee4-45d3-b1b0-bf822d9095ef.SonarQubePublish@5
+  displayName: 'Publish Quality Gate Result'
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
