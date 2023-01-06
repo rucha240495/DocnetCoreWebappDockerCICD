@@ -12,7 +12,31 @@ variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
 
 steps:
-
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'azSonar'
+    scannerMode: 'MSBuild'
+    projectKey: 'mytestproject_dotnet-job'
+    projectName: 'DemoProject'
+- task: SonarQubeAnalyze@5
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
+      $base64 = [System.Convert]::ToBase64String($token)
+       
+      $basicAuth = [string]::Format("Basic {0}", $base64)
+      $headers = @{ Authorization = $basicAuth }
+       
+      $result = Invoke-RestMethod -Method Get -Uri http://alegrisource.westeurope.cloudapp.azure.com/api/qualitygates/project_status?projectKey=alegri-cockpit20 -Headers $headers
+      $result | ConvertTo-Json | Write-Host
+       
+      if ($result.projectStatus.status -eq "OK") {
+      Write-Host "Quality Gate Succeeded"
+      }else{
+      throw "Quality gate failed"
+      }
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
