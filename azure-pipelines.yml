@@ -10,6 +10,7 @@ trigger:
 
 variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
+  
 stages:
 - stage: build
   displayName: Build
