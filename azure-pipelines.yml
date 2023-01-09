@@ -8,8 +8,7 @@ trigger:
 
 #pool: DemoAg
 
-variables:
-  imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
+
   
 stages:
 - stage: build
@@ -19,6 +18,8 @@ stages:
     pool:
       name: DemoAg
       vmImage: 'Agent-1'
+    variables:
+     imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
     steps:
       - task: SonarQubePrepare@5
         inputs:
@@ -54,7 +55,7 @@ stages:
   jobs:
   - job: Deploy
     pool:
-      name: DemoAg
+      name: 'DemoAg'
       vmImage: 'Deployment'
     steps:
        - task: CmdLine@2
