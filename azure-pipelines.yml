@@ -11,45 +11,45 @@ trigger:
 
   
 stages:
-# - stage: build
-#   displayName: Build
-#   jobs:
-#   - job: Build
-#     pool:
-#       name: DemoAg
-#       vmImage: 'Agent-1'
-#     variables:
-#      imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
-#     steps:
-#       - task: SonarQubePrepare@5
-#         inputs:
-#           SonarQube: 'azSonar'
-#           scannerMode: 'CLI'
-#           configMode: 'file'
-#       # - task: NDependTask@1
-#       #   inputs:
-#       #     viewname: 'DemoProject'
-#       #     BuildGates: true
-#       - task: Docker@1
-#         displayName: 'Build an image'
-#         inputs:
-#           command: Build an image
-#           containerregistrytype: 'Container Registry'
-#           dockerRegistryEndpoint: dockerHub
-#           dockerFile: Dockerfile
-#           imageName: $(imageName)
-#           restartPolicy: always
+- stage: build
+  displayName: Build
+  jobs:
+  - job: Build
+    pool:
+      name: DemoAg
+      vmImage: 'Agent-1'
+    variables:
+     imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
+    steps:
+      - task: SonarQubePrepare@5
+        inputs:
+          SonarQube: 'azSonar'
+          scannerMode: 'CLI'
+          configMode: 'file'
+      # - task: NDependTask@1
+      #   inputs:
+      #     viewname: 'DemoProject'
+      #     BuildGates: true
+      - task: Docker@1
+        displayName: 'Build an image'
+        inputs:
+          command: Build an image
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: dockerHub
+          dockerFile: Dockerfile
+          imageName: $(imageName)
+          restartPolicy: always
       
       
-#       - task: Docker@1
-#         displayName: 'Push an image'
-#         inputs:
-#           command: Push an image
-#           containerregistrytype: 'Container Registry'
-#           dockerRegistryEndpoint: dockerHub
-#           dockerFile: Dockerfile
-#           imageName: $(imageName)
-#           restartPolicy: always
+      - task: Docker@1
+        displayName: 'Push an image'
+        inputs:
+          command: Push an image
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: dockerHub
+          dockerFile: Dockerfile
+          imageName: $(imageName)
+          restartPolicy: always
 - stage: Deployment
   displayName: Deployment
   jobs:
@@ -62,4 +62,4 @@ stages:
     steps:
        - task: CmdLine@2
          inputs:
-           script: 'docker run -itd httpd'
+           script: 'docker run -itd $(imageName)'
