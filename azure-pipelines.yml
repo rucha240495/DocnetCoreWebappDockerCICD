@@ -22,11 +22,11 @@ stages:
     # variables:
     #  imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
     steps:
-      - task: SonarQubePrepare@5
-        inputs:
-          SonarQube: 'azSonar'
-          scannerMode: 'CLI'
-          configMode: 'file'
+      # - task: SonarQubePrepare@5
+      #   inputs:
+      #     SonarQube: 'azSonar'
+      #     scannerMode: 'CLI'
+      #     configMode: 'file'
       # - task: NDependTask@1
       #   inputs:
       #     viewname: 'DemoProject'
