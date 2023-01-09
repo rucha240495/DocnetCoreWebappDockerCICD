@@ -38,3 +38,20 @@ stages:
           dockerFile: Dockerfile
           imageName: $(imageName)
           restartPolicy: always
+- stage: Deployment
+  displayName: Deployment
+  jobs:
+  - job: Build
+    pool:
+      name: DemoAg
+      vmImage: 'Agent-1'
+    steps:
+      - task: Docker@1
+        displayName: 'Build an image'
+        inputs:
+          command: Build an image
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: dockerHub
+          dockerFile: Dockerfile
+          imageName: $(imageName)
+          restartPolicy: always
