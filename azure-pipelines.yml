@@ -20,15 +20,6 @@ stages:
       name: DemoAg
       vmImage: 'Agent-1'
     steps:
-      - task: Docker@1
-        displayName: 'Build an image'
-        inputs:
-          command: Build an image
-          containerregistrytype: 'Container Registry'
-          dockerRegistryEndpoint: dockerHub
-          dockerFile: Dockerfile
-          imageName: $(imageName)
-          restartPolicy: always
       - task: SonarQubePrepare@5
         inputs:
           SonarQube: 'azSonar'
@@ -38,6 +29,17 @@ stages:
         inputs:
           viewname: 'DemoProject'
           BuildGates: true
+      - task: Docker@1
+        displayName: 'Build an image'
+        inputs:
+          command: Build an image
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: dockerHub
+          dockerFile: Dockerfile
+          imageName: $(imageName)
+          restartPolicy: always
+      
+      
       - task: Docker@1
         displayName: 'Push an image'
         inputs:
