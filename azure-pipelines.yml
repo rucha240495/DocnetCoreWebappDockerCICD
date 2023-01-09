@@ -41,17 +41,11 @@ stages:
 - stage: Deployment
   displayName: Deployment
   jobs:
-  - job: Build
+  - job: Deploy
     pool:
       name: DemoAg
-      vmImage: 'Agent-1'
+      vmImage: 'Deployment'
     steps:
-      - task: Docker@1
-        displayName: 'Build an image'
+      - task: CmdLine@2
         inputs:
-          command: Build an image
-          containerregistrytype: 'Container Registry'
-          dockerRegistryEndpoint: dockerHub
-          dockerFile: Dockerfile
-          imageName: $(imageName)
-          restartPolicy: always
+          script: 'docker run -d nginx -p 8091:80'
