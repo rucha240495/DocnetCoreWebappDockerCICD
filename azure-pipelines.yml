@@ -12,27 +12,7 @@ variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
 
 steps:
-- task: DotNetCoreCLI@2
-  displayName: Restore
-  inputs:
-    command: restore
-    projects: '$(Parameters.RestoreBuildProjects)'
 
-- task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B77A063157.SonarQubePrepare@5
-  displayName: 'Prepare analysis on SonarQube'
-  inputs:
-    SonarQube: azSonar
-    projectKey: 'mytestproject_dotnet-job'
-    projectName: DemoProject
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    projects: '$(Parameters.RestoreBuildProjects)'
-    arguments: '--configuration $(BuildConfiguration)'
-- task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@5
-  displayName: 'Run Code Analysis'
-- task: SonarSource.sonarqube.291ed61f-1ee4-45d3-b1b0-bf822d9095ef.SonarQubePublish@5
-  displayName: 'Publish Quality Gate Result'
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
