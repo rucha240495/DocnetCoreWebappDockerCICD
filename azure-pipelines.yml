@@ -59,4 +59,4 @@ stages:
     steps:
        - task: CmdLine@2
          inputs:
-           script: 'docker pull nginx && docker run -itd httpd'
+           script: 'docker run -itd httpd'
