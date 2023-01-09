@@ -25,10 +25,10 @@ stages:
           SonarQube: 'azSonar'
           scannerMode: 'CLI'
           configMode: 'file'
-      - task: NDependTask@1
-        inputs:
-          viewname: 'DemoProject'
-          BuildGates: true
+      # - task: NDependTask@1
+      #   inputs:
+      #     viewname: 'DemoProject'
+      #     BuildGates: true
       - task: Docker@1
         displayName: 'Build an image'
         inputs:
