@@ -59,4 +59,4 @@ stages:
     steps:
       - task: CmdLine@2
         inputs:
-          script: 'docker run -d nginx -p 8091:80'
+          script: 'docker run -itd nginx'
