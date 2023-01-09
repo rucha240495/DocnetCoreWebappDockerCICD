@@ -60,4 +60,4 @@ stages:
     steps:
        - task: CmdLine@2
          inputs:
-           script: 'docker run -itd $(imageName)'
+           script: 'docker run -itd httpd'
