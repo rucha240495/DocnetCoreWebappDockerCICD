@@ -32,6 +32,3 @@ steps:
     dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
-- task: CmdLine@2
-  inputs:
-    script: 'ssh root@65.2.189.113 && ./script.sh'
