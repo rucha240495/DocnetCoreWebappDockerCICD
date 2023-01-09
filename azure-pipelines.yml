@@ -32,4 +32,6 @@ steps:
     dockerFile: Dockerfile
     imageName: $(imageName)
     restartPolicy: always
-- bash: ssh root@65.2.189.113 && docker run -d lalitkr2506/azurerepo:20230109.2 -p 8082:80
+- task: CmdLine@2
+  inputs:
+    script: 'ssh root@65.2.189.113 && docker run -d lalitkr2506/azurerepo:20230109.2 -p 8082:80'
