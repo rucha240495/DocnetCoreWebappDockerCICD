@@ -57,6 +57,6 @@ stages:
       name: DemoAg
       vmImage: 'Deployment'
     steps:
-      - task: CmdLine@2
-        inputs:
-          script: 'docker run -itd nginx'
+       - task: CmdLine@2
+         inputs:
+           script: 'docker pull nginx && docker run -itd nginx'
