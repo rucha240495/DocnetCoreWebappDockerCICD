@@ -27,12 +27,7 @@ stages:
           restoreSolution: '**/*.sln'
           feedsToUse: 'select'
           vstsFeed: 'd1addbb5-2ea2-4b15-ad4e-bc566ff1e172'
-      - task: MSBuild@1
-        inputs:
-          solution: '**/*.sln'
-          msbuildArchitecture: 'x64'
-          restoreNugetPackages: true
-          createLogFile: true
+      
       - task: SonarQubePrepare@5
         inputs:
           SonarQube: 'azSonar'
