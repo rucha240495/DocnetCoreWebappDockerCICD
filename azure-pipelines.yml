@@ -26,6 +26,7 @@ stages:
           SonarQube: 'azSonar'
           scannerMode: 'CLI'
           configMode: 'file'
+      - task: SonarQubeAnalyze@5
       - task: Docker@1
         displayName: 'Build an image'
         inputs:
