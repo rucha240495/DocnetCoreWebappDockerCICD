@@ -21,6 +21,12 @@ stages:
       demands:
         - Agent.Name -equals Agent-1
     steps:
+      - task: MSBuild@1
+        inputs:
+          solution: '**/*.sln'
+          msbuildArchitecture: 'x64'
+          restoreNugetPackages: true
+          createLogFile: true
       - task: SonarQubePrepare@5
         inputs:
           SonarQube: 'azSonar'
