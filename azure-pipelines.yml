@@ -34,6 +34,11 @@ stages:
           scannerMode: 'MSBuild'
           projectKey: 'mytestproject_dotnet-job'
           projectName: 'DemoProject'
+      - task: MSBuild@1
+        inputs:
+          solution: '**/*.sln'
+          msbuildArchitecture: 'x64'
+          restoreNugetPackages: true
       - task: SonarQubeAnalyze@5
       - task: Docker@1
         displayName: 'Build an image'
