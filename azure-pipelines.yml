@@ -6,7 +6,6 @@
 trigger:
 - master
 
-#pool: DemoAg
 variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
 
@@ -61,6 +60,7 @@ stages:
         inputs:
           script: 'ssh root@3.109.144.178 docker run -itd $(imageName)'
 # - stage: Deployment
+#   dependsOn: "build"
 #   displayName: Deployment
 #   jobs:
 #   - job: Deploy
