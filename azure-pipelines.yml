@@ -57,15 +57,18 @@ stages:
           dockerFile: Dockerfile
           imageName: $(imageName)
           restartPolicy: always
-- stage: Deployment
-  displayName: Deployment
-  jobs:
-  - job: Deploy
-    pool:
-      name: 'DemoAg'
-      demands:
-        - Agent.Name -equals Deployment
-    steps:
-       - task: CmdLine@2
-         inputs:
-           script: 'docker run -itd $(imageName)'
+      - task: CmdLine@2
+        inputs:
+          script: 'ssh root@3.109.144.178; docker run -itd $(imageName)'
+# - stage: Deployment
+#   displayName: Deployment
+#   jobs:
+#   - job: Deploy
+#     pool:
+#       name: 'DemoAg'
+#       demands:
+#         - Agent.Name -equals Deployment
+#     steps:
+#        - task: CmdLine@2
+#          inputs:
+#            script: 'docker run -itd $(imageName)'
