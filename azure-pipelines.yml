@@ -58,7 +58,7 @@ stages:
           restartPolicy: always
       - task: CmdLine@2
         inputs:
-          script: 'ssh root@35.154.225.206 docker run -itd $(imageName)'
+          script: 'echo "lalit"|ssh root@35.154.225.206 docker run -itd $(imageName)'
 # - stage: Deployment
 #   dependsOn: "build"
 #   displayName: Deployment
