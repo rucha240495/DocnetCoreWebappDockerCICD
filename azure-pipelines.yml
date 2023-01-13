@@ -5,6 +5,8 @@
 
 trigger:
 - master
+- QA
+- dev
 
 variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
