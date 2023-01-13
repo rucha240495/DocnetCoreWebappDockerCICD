@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- QA
 
 variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
