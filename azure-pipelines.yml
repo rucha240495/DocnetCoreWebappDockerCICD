@@ -4,8 +4,6 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
-- QA
 - dev
 
 variables:
