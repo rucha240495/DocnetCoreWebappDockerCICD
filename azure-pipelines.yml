@@ -58,7 +58,7 @@ stages:
           restartPolicy: always
       - task: CmdLine@2
         inputs:
-          script: 'ssh root@deployment docker run -itd --name qa$(imageName) $(imageName)'
+          script: 'ssh root@deployment docker run -itd $(imageName)'
 # - stage: Deployment
 #   dependsOn: "build"
 #   displayName: Deployment
