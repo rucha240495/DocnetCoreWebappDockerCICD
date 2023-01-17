@@ -59,6 +59,7 @@ stages:
                    echo "branch is $branch" 
                    if [ "$branch" == "dev" ] 
                    then 
+                      echo "test"
                       echo "Deploying on $HOSTNAME"
                       ssh root@deployment-dev docker run -itd $(imageName) 
                    elif [ "$branch" == "QA" ] 
