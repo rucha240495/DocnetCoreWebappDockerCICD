@@ -5,6 +5,8 @@
 
 trigger:
 - QA
+- master
+- dev
 
 variables:
   imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
@@ -56,9 +58,10 @@ stages:
           dockerFile: Dockerfile
           imageName: $(imageName)
           restartPolicy: always
-      - task: CmdLine@2
-        inputs:
-          script: 'ssh root@deployment docker run -itd $(imageName)'
+      # - task: CmdLine@2
+      #   inputs:
+      #     script: 'ssh root@deployment docker run -itd $(imageName)'
+        
 # - stage: Deployment
 #   dependsOn: "build"
 #   displayName: Deployment
