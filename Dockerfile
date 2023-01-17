@@ -13,6 +13,7 @@ RUN dotnet restore "./DocnetCoreWebappDockerCICD.csproj"
 COPY . .
 WORKDIR "/src/."
 RUN dotnet build "DocnetCoreWebappDockerCICD.csproj" -c Release -o /app/build
+RUN echo "test"
 
 # STAGE02 - Publish the application
 FROM build AS publish
