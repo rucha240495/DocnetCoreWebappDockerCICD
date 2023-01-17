@@ -61,6 +61,20 @@ stages:
       - task: CmdLine@2
         inputs:
           script: 'ssh root@deployment docker run -itd $(imageName)'
+      - task: CmdLine@2
+        inputs:
+          script: |
+               branch=$(Build.SourceBranchName) 
+                   echo "branch is $branch" 
+                   if [ "$branch" == "dev" ] 
+                   then 
+                      ssh root@deployment-dev echo "Deploying on $HOSTNAME" && docker run -itd $(imageName) 
+                   elif [ "$branch" == "QA" ] 
+                   then  
+                       ssh root@deployment-QA echo "Deploying on $HOSTNAME" && docker run -itd $(imageName) 
+                   else
+                       ssh root@deployment-master echo "Deploying on $HOSTNAME" && docker run -itd $(imageName) 
+                   fi
         
 # - stage: Deployment
 #   dependsOn: "build"
