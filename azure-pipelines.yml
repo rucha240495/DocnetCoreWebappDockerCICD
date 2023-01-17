@@ -49,12 +49,26 @@ stages:
           dockerFile: Dockerfile
           imageName: $(imageName)
           restartPolicy: always
+      # - task: CmdLine@2
+      #   inputs:
+      #     script: 'ssh root@deployment-2 docker run -itd $(imageName)'
       - task: CmdLine@2
         inputs:
-          script: 'ssh root@deployment-2 docker run -itd $(imageName)'
-      - task: CmdLine@2
-        inputs:
-          script: 'echo $(Build.SourceBranchName)'
+          script: |
+               branch=$(Build.SourceBranchName) 
+                   echo "branch is $branch" 
+                   if [ "$branch" == "dev" ] 
+                   then 
+                      echo "Deploying on $HOSTNAME"
+                      ssh root@deployment-dev docker run -itd $(imageName) 
+                   elif [ "$branch" == "QA" ] 
+                   then 
+                       echo "Deploying on $HOSTNAME" 
+                       ssh root@deployment-QA docker run -itd $(imageName) 
+                   else
+                       echo "Deploying on $HOSTNAME"
+                       ssh root@deployment-master docker run -itd $(imageName) 
+                   fi
 # - stage: Deployment
 #   dependsOn: "build"
 #   displayName: Deployment
