@@ -70,7 +70,8 @@ stages:
                    then 
                       ssh root@deployment-dev echo "Deploying on $HOSTNAME" && docker run -itd $(imageName) 
                    elif [ "$branch" == "QA" ] 
-                   then  
+                   then   
+                       echo "test"
                        ssh root@deployment-QA echo "Deploying on $HOSTNAME" && docker run -itd $(imageName) 
                    else
                        ssh root@deployment-master echo "Deploying on $HOSTNAME" && docker run -itd $(imageName) 
