@@ -52,12 +52,12 @@ stages:
                    echo "branch is $branch" 
                    if [ "$branch" == "dev" ] 
                    then 
-                      ssh root@deployment-dev echo "Deploying on $HOSTNAME" && docker run -itd $(imageName) 
+                      ssh root@deployment-dev docker run -itd $(imageName) 
                    elif [ "$branch" == "QA" ] 
                    then   
-                       ssh root@deployment-QA echo "Deploying on $HOSTNAME" && docker run -itd $(imageName) 
+                       ssh root@deployment-QA docker run -itd $(imageName) 
                    else
-                       ssh root@deployment-master echo "Deploying on $HOSTNAME" && docker run -itd $(imageName) 
+                       ssh root@deployment-master docker run -itd $(imageName) 
                    fi
         
 # - stage: Deployment
