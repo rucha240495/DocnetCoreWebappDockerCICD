@@ -55,6 +55,7 @@ stages:
                           server=deployment-dev 
                    elif [ "$branch" == "QA" ] 
                    then   
+                        echo "test msg"
                         server=deployment-QA
                    else
                        server=deployment-master
