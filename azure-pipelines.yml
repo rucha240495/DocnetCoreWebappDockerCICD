@@ -22,15 +22,6 @@ stages:
       demands:
         - Agent.Name -equals Agent-1
     steps:
-      # - task: SonarQubePrepare@5
-      #   inputs:
-      #     SonarQube: 'azSonar'
-      #     scannerMode: 'CLI'
-      #     configMode: 'manual'
-      #     cliProjectKey: 'mytestproject_dotnet-job'
-      #     cliProjectName: 'DemoAg'
-      #     cliSources: '.'
-      # - task: SonarQubeAnalyze@5
       - task: Docker@1
         displayName: 'Build an image'
         inputs:
@@ -49,7 +40,7 @@ stages:
           dockerFile: Dockerfile
           imageName: $(imageName)
           restartPolicy: always
-    # # - task: CmdLine@2
+      # - task: CmdLine@2
       #   inputs:
       #     script: 'ssh root@deployment-2 docker run -itd $(imageName)'
       - task: CmdLine@2
