@@ -61,6 +61,11 @@ stages:
                        server=deployment-master
                    fi
                      ssh root@"$server" docker run -itd $(imageName)
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
 # - stage: Deployment
 #   dependsOn: "build"
 #   displayName: Deployment
