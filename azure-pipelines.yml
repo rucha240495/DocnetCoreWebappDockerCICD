@@ -4,32 +4,78 @@
 # https://aka.ms/yaml
 
 trigger:
+- QA
 - master
-
-pool:
-  vmImage: 'ubuntu-latest'
+- dev
 
 variables:
-  imageName: 'ramakrishnambdocker/DocnetCoreWebappDockerCICD:$(build.buildNumber)'
+  imageName: 'lalitkr2506/azurerepo:$(build.buildNumber)'
 
-steps:
-
-- task: Docker@1
-  displayName: 'Build an image'
-  inputs:
-    command: Build an image
-    containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: DockerRegistryRK
-    dockerFile: Dockerfile
-    imageName: $(imageName)
-    restartPolicy: always
-
-- task: Docker@1
-  displayName: 'Push an image'
-  inputs:
-    command: Push an image
-    containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: DockerRegistryRK
-    dockerFile: Dockerfile
-    imageName: $(imageName)
-    restartPolicy: always
+  
+stages:
+- stage: build
+  displayName: Build
+  jobs:
+  - job: Build
+    pool:
+      name: DemoAg
+      demands:
+        - Agent.Name -equals Agent-1
+    steps:
+      - task: Docker@1
+        displayName: 'Build an image'
+        inputs:
+          command: Build an image
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: dockerHub
+          dockerFile: Dockerfile
+          imageName: $(imageName)
+          restartPolicy: always
+      
+      
+      - task: Docker@1
+        displayName: 'Push an image'
+        inputs:
+          command: Push an image
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: dockerHub
+          dockerFile: Dockerfile
+          imageName: $(imageName)
+          restartPolicy: always
+      # - task: CmdLine@2
+      #   inputs:
+      #     script: 'ssh root@deployment docker run -itd $(imageName)'
+      - task: CmdLine@2
+        inputs:
+          script: |
+               branch=$(Build.SourceBranchName) 
+                   echo "branch is $branch" 
+                   if [ "$branch" == "dev" ] 
+                   then 
+                          server=deployment-dev 
+                   elif [ "$branch" == "QA" ] 
+                   then   
+                        echo "test msg"
+                        server=deployment-QA
+                   else
+                       server=deployment-master
+                   fi
+                     ssh root@"$server" docker run -itd $(imageName)
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
+# - stage: Deployment
+#   dependsOn: "build"
+#   displayName: Deployment
+#   jobs:
+#   - job: Deploy
+#     pool:
+#       name: 'DemoAg'
+#       demands:
+#         - Agent.Name -equals Deployment
+#     steps:
+#        - task: CmdLine@2
+#          inputs:
+#            script: 'docker run -itd $(imageName)'
